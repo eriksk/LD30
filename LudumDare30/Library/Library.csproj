@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A6473C0B-CA84-4384-942C-123413623AED}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Library</RootNamespace>
+    <AssemblyName>Library</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\WindowsGL\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Animations\FrameStepAnimation.cs" />
+    <Compile Include="Animations\TreeAnimations\Animation.cs" />
+    <Compile Include="Animations\TreeAnimations\AnimationCollection.cs" />
+    <Compile Include="Animations\TreeAnimations\AnimationEvent.cs" />
+    <Compile Include="Animations\TreeAnimations\AnimationPart.cs" />
+    <Compile Include="Animations\TreeAnimations\AnimationTimeLine.cs" />
+    <Compile Include="Animations\TreeAnimations\AnimationTranslation.cs" />
+    <Compile Include="Animations\TreeAnimations\Events\PositionEvent.cs" />
+    <Compile Include="Animations\TreeAnimations\Events\RotationEvent.cs" />
+    <Compile Include="Cameras\Camera.cs" />
+    <Compile Include="Collections\Range.cs" />
+    <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\PoolableGameObject.cs" />
+    <Compile Include="Interpolations\Elastic.cs" />
+    <Compile Include="Interpolations\Exp.cs" />
+    <Compile Include="Interpolations\Fade.cs" />
+    <Compile Include="Interpolations\Interpolation.cs" />
+    <Compile Include="Interpolations\Linear.cs" />
+    <Compile Include="Interpolations\Pow.cs" />
+    <Compile Include="Interpolations\Sine.cs" />
+    <Compile Include="Interpolations\SineIn.cs" />
+    <Compile Include="Interpolations\SineOut.cs" />
+    <Compile Include="Management\Pool.cs" />
+    <Compile Include="Metrics\TimerTrig.cs" />
+    <Compile Include="Particles\Particle.cs" />
+    <Compile Include="Particles\ParticleEmitter.cs" />
+    <Compile Include="Particles\ParticleEmitterSettings.cs" />
+    <Compile Include="Particles\ParticleManager.cs" />
+    <Compile Include="Particles\ParticleSystem.cs" />
+    <Compile Include="Particles\ParticleSystemLoader.cs" />
+    <Compile Include="Particles\ParticleSystemSettings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ranges\ColorRange.cs" />
+    <Compile Include="Ranges\FloatRange.cs" />
+    <Compile Include="Ranges\Gravity.cs" />
+    <Compile Include="Ranges\Vector2Range.cs" />
+    <Compile Include="Resolutions\IResolutionIndependence.cs" />
+    <Compile Include="Resolutions\Resolution.cs" />
+    <Compile Include="Screens\BaseScreen.cs" />
+    <Compile Include="Screens\IGameContext.cs" />
+    <Compile Include="Screens\IScreen.cs" />
+    <Compile Include="Screens\ScreenState.cs" />
+    <Compile Include="Sprites\SpriteSheet.cs" />
+    <Compile Include="Tweening\ITween.cs" />
+    <Compile Include="Tweening\ITweenable.cs" />
+    <Compile Include="Tweening\Stock\PositionTween.cs" />
+    <Compile Include="Tweening\Stock\RotationTween.cs" />
+    <Compile Include="Tweening\Stock\ScaleXYTween.cs" />
+    <Compile Include="Tweening\Tween.cs" />
+    <Compile Include="Tweening\TweenManager.cs" />
+    <Compile Include="UI\Text.cs" />
+    <Compile Include="UI\TextAlign.cs" />
+    <Compile Include="Utils\Rand.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
