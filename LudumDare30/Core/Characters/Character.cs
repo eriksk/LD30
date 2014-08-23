@@ -39,7 +39,7 @@ namespace Core.Characters
         float speed = 0f;
         float rotationSpeed = 0;
         float constantSpeed = 0.005f;
-        float constantRotationSpeed = 0.4f;
+        float constantRotationSpeed = 0.7f;
         float maxSpeed = 0.005f;
 
         public float Speed { get { return (constantSpeed + speed) / maxSpeed; } }
