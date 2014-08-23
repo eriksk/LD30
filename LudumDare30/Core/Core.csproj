@@ -68,6 +68,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\dialogue\introScene.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
