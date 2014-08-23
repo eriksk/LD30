@@ -9,6 +9,7 @@ namespace Core.Screens
     public enum GameState
     {
         Playing,
-        WaitingToStart
+        WaitingToStart,
+        Finished
     }
 }
