@@ -12,15 +12,17 @@ namespace Core.TMX
     public class TmxMapLoader
     {
         ContentManager content;
+        string mapsDirectoryName;
 
-        public TmxMapLoader(ContentManager content)
+        public TmxMapLoader(ContentManager content, string mapsDirectoryName)
         {
             this.content = content;
+            this.mapsDirectoryName = mapsDirectoryName;
         }
 
         public TmxMapData Load(string name) 
         {
-            string path = string.Format("{0}/{1}.json", content.RootDirectory, name);
+            string path = string.Format("{0}/{1}/{2}.json", content.RootDirectory, mapsDirectoryName, name);
             var jsonContent = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<TmxMapData>(jsonContent);
         }
