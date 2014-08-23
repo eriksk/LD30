@@ -37,7 +37,7 @@ namespace Core.Screens
             
             string[] strings = JsonConvert.DeserializeObject<string[]>(File.ReadAllText(string.Concat(content.RootDirectory, "/dialogue/introScene.json")));
 
-            dialogueWindow = new DialogueWindow(pixel, new Conversation(strings, 2000), 0, 0) 
+            dialogueWindow = new DialogueWindow(pixel, new Conversation(strings, 4000), 0, 0) 
             {
                 DrawBubble = false
             };
