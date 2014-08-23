@@ -19,7 +19,9 @@ namespace Core.Bootstrap
 
         public IScreen CreateDefaultScreen() 
         {
-            return new GameScreen(context);
+            //return new GameScreen(context);
+            //return new GameOverScreen(context);
+            return new IntroScreen(context);
         }
     }
 }

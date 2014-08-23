@@ -41,14 +41,35 @@ namespace Core.Screens
             {
                 DrawBubble = false
             };
+            Audio.Audio.I.PlayLooped("menu_song");
+
 
             base.Load();
         }
 
+        public override void StateChanged()
+        {
+            base.StateChanged();
+            if (Done) 
+            {
+                context.ChangeScreen(new GameScreen(context));
+            }
+        }
+
+
         public override void Update(float dt)
         {
-            dialogueWindow.Update(dt);
-
+            if (Running)
+            {
+                if (dialogueWindow.Done)
+                {
+                    TransitionOut();
+                }
+                else
+                {
+                    dialogueWindow.Update(dt);
+                }
+            }
             base.Update(dt);
         }
 

@@ -36,6 +36,8 @@ namespace Core.Audio
             effects.Add("engine", content.Load<SoundEffect>(@"audio/engine").CreateInstance());
             effects.Add("explosion", content.Load<SoundEffect>(@"audio/explosion").CreateInstance());
             effects.Add("switch_positive", content.Load<SoundEffect>(@"audio/switch_positive").CreateInstance());
+            effects.Add("menu_song", content.Load<SoundEffect>(@"audio/menu_song").CreateInstance());
+            effects["menu_song"].Volume = 0.3f;
         }
 
         public void Play(string name)

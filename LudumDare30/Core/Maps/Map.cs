@@ -62,6 +62,18 @@ namespace Core.Maps
             }
         }
 
+        public string Description 
+        {
+            get
+            {        
+                if (tmxMap.properties.ContainsKey("description")) 
+                {
+                    return tmxMap.properties["description"];
+                }
+                return "";
+            } 
+        }
+
         public Rectangle Goal
         {
             get
@@ -197,7 +209,5 @@ namespace Core.Maps
                 }
             }
         }
-
-
     }
 }

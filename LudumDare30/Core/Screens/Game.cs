@@ -57,6 +57,8 @@ namespace Core.Screens
 
         string[] taunts;
 
+        DrawableText mapDescription;
+
         public Game() 
         {
         }
@@ -70,9 +72,14 @@ namespace Core.Screens
             negate = content.Load<Effect>(@"shaders/negate");
             mapLoader = new TmxMapLoader(content, "maps");
 
+            mapDescription = new DrawableText("", TextAlign.Center);
+
             deadText = new DrawableText("DEAD", TextAlign.Center);
             font = content.Load<SpriteFont>(@"fonts/xirod_32");
             tauntText = new DrawableText("", TextAlign.Center);
+            tauntText.color = Color.Red;
+
+            mapDescription.color = Color.Green;
 
             pixel = new Texture2D(graphicsDevice, 1, 1);
             pixel.SetData<Color>(new Color[] { Color.White });
@@ -118,6 +125,9 @@ namespace Core.Screens
 
         private void Restart(TweenManager tweenManager)
         {
+            mapDescription.Content = map.Description;
+            tweenManager.Add(new ScaleXYTween(mapDescription, Interpolation.Elastic, 500f, 0f, 0.6f));
+            tweenManager.Add(new PositionTween(mapDescription, Interpolation.Elastic, 500f, Vector2.Zero, new Vector2(0, - 128)));
             playGuiBox.Show(tweenManager, deathCount);
             var startPosition = map.StartPosition;
             character.SetPosition(startPosition.X, startPosition.Y);
@@ -245,6 +255,7 @@ namespace Core.Screens
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, guiCam.Projection);
                 playGuiBox.Draw(spriteBatch, font);
                 tauntText.Draw(spriteBatch, font);
+                mapDescription.Draw(spriteBatch, font);
                 spriteBatch.End();
             }
 

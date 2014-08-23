@@ -49,20 +49,33 @@ namespace Core.Screens
         public override void StateChanged()
         {
             base.StateChanged();
+            if (Done) 
+            {
+                context.ChangeScreen(new GameOverScreen(context));
+            }
         }
 
         public override void Update(float dt)
         {
-            if (game.State == GameState.Finished)
+            if (Running)
             {
-                currentMap++;
-                LoadCurrentMap();
+                if (game.State == GameState.Finished)
+                {
+                    currentMap++;
+                    if (currentMap > maps.Length - 1)
+                    {
+                        TransitionOut();
+                    }
+                    else
+                    {
+                        LoadCurrentMap();
+                    }
+                }
+                else
+                {
+                    game.Update(dt, cam, tweenManager);
+                }
             }
-            else
-            {
-                game.Update(dt, cam, tweenManager);
-            }
-            
             base.Update(dt);
         }
 
