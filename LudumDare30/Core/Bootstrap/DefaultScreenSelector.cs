@@ -19,7 +19,7 @@ namespace Core.Bootstrap
 
         public IScreen CreateDefaultScreen() 
         {
-            return new IntroScreen(context);
+            return new MapTestScreen(context);
         }
     }
 }

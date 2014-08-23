@@ -17,9 +17,6 @@ namespace Core.Screens
 {
     public class GameScreen : BaseScreen
     {
-        TmxMapLoader mapLoader;
-        Map map;
-
         public GameScreen(IGameContext context)
             :base(context, "Ludum Dare 30", 1280, 720)
         {
@@ -28,8 +25,6 @@ namespace Core.Screens
 
         public override void Load()
         {
-            mapLoader = new TmxMapLoader(content);
-            map = new Map(mapLoader.Load("testmap"));
             base.Load();
         }
 
