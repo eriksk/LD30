@@ -43,7 +43,7 @@ namespace Core.Screens
 
         private void LoadCurrentMap()
         {
-            game.LoadMap(maps[currentMap]);
+            game.LoadMap(maps[currentMap], tweenManager);
         }
 
         public override void StateChanged()
@@ -60,7 +60,7 @@ namespace Core.Screens
             }
             else
             {
-                game.Update(dt, cam);
+                game.Update(dt, cam, tweenManager);
             }
             
             base.Update(dt);

@@ -4,6 +4,7 @@ using Core.Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using se.skoggy.utils.Animations;
 using se.skoggy.utils.GameObjects;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Core.Characters
         public Vector2 velocity;
         Map map;
         bool alive;
+        FrameStepAnimation animation;
 
         public Character(Texture2D texture, Map map)
             :base(texture)
@@ -25,6 +27,8 @@ namespace Core.Characters
             this.map = map;
             velocity = Vector2.Zero;
             alive = true;
+            animation = new FrameStepAnimation(new int[] { 0, 1, 2 }, 40f);
+            SetSource(0, 0, 32, 32);
         }
 
         public bool Alive { get { return alive; } set { alive = value; } }
@@ -49,6 +53,8 @@ namespace Core.Characters
             oldKeys = keys;
             keys = Keyboard.GetState();
 
+            animation.Update(dt);
+            SetSource(32 * animation.Frame, 0, 32, 32);
 
             rotationSpeed = (constantSpeed + speed) * 1.1f;
 

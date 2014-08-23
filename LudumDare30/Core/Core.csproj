@@ -51,6 +51,7 @@
     <Compile Include="Conversations\Conversation.cs" />
     <Compile Include="Gui\DialogueWindow.cs" />
     <Compile Include="Gui\DrawableRectangle.cs" />
+    <Compile Include="Gui\PlayGuiBox.cs" />
     <Compile Include="Maps\Cell.cs" />
     <Compile Include="Maps\Door.cs" />
     <Compile Include="Maps\DoorType.cs" />
