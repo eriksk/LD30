@@ -73,7 +73,7 @@ namespace Core.Screens
             pixel = new Texture2D(graphicsDevice, 1, 1);
             pixel.SetData<Color>(new Color[] { Color.White });
 
-            bikeTexture = content.Load<Texture2D>(@"gfx/bike");
+            bikeTexture = content.Load<Texture2D>(@"gfx/car");
 
             playGuiBox = new PlayGuiBox();
 
