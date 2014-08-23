@@ -52,6 +52,8 @@ namespace Core.Screens
         PlayGuiBox playGuiBox;
         Camera guiCam;
 
+        int deathCount = 0;
+
         public Game() 
         {
         }
@@ -84,8 +86,9 @@ namespace Core.Screens
             particleManager.AddSystem(explosion);
         }
 
-        public void LoadMap(string name)
+        public void LoadMap(string name, TweenManager tweenManager)
         {
+            deathCount = 0;
             map = new Map(mapLoader.Load(name));
             map.Load(content);
 
@@ -97,7 +100,7 @@ namespace Core.Screens
             negativityFlipWait = new TimerTrig(0);
             negativityFlipWait.Update(0);
 
-            Restart();
+            Restart(tweenManager);
         }
 
         private void Finish()
@@ -107,8 +110,9 @@ namespace Core.Screens
 
         public GameState State { get { return state; } }
 
-        private void Restart()
+        private void Restart(TweenManager tweenManager)
         {
+            playGuiBox.Show(tweenManager, deathCount);
             var startPosition = map.StartPosition;
             character.SetPosition(startPosition.X, startPosition.Y);
             character.rotation = 0f;
@@ -178,6 +182,7 @@ namespace Core.Screens
                     explosion.position.Y = character.position.Y;
                     explosion.Reset();
                     explosion.Play();
+                    deathCount++;
                 }
                 else
                 {
@@ -192,8 +197,7 @@ namespace Core.Screens
             {
                 if (reloadAfterDeathTrig.IsTrigged(dt) || (keys.IsKeyDown(Keys.Space) && oldKeys.IsKeyUp(Keys.Space))) 
                 {
-                    Restart();
-                    playGuiBox.Show(tweenManager);
+                    Restart(tweenManager);
                 }
             }
 
