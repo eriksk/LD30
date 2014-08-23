@@ -95,7 +95,8 @@
  "orientation":"orthogonal",
  "properties":
     {
-
+     "description":"Time your jumps perfectly now Glenn, it's not like your life depends on it. Oh, wait. It does.",
+     "taunts":"This is still warmup you know.. Thank god that THE AUTHORITY don't have to watch this;Come on, try again. It's easy!"
     },
  "tileheight":32,
  "tilesets":[
