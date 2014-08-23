@@ -187,12 +187,12 @@ namespace Core.Screens
 
                     if (taunts != null && taunts.Length > 0) 
                     {
-                        tauntText.Content = taunts[Rand.Next(taunts.Length - 1)];
+                        tauntText.Content = taunts[Rand.Next(taunts.Length)];
                     }
 
                     tweenManager.Add(new ScaleXYTween(deadText, Interpolation.Elastic, 1000f, 0f, 3f));
-                    tweenManager.Add(new ScaleXYTween(tauntText, Interpolation.Elastic, 1000f, 0f, 2f));
-                    tweenManager.Add(new PositionTween(tauntText, Interpolation.Elastic, 1000f, Vector2.Zero, new Vector2(0, 64f)));
+                    tweenManager.Add(new ScaleXYTween(tauntText, Interpolation.Elastic, 1000f, 0f, 0.6f));
+                    tweenManager.Add(new PositionTween(tauntText, Interpolation.Elastic, 1000f, Vector2.Zero, new Vector2(0, 128)));
                     explosion.position.X = character.position.X;
                     explosion.position.Y = character.position.Y;
                     explosion.Reset();
@@ -244,6 +244,7 @@ namespace Core.Screens
             {
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, guiCam.Projection);
                 playGuiBox.Draw(spriteBatch, font);
+                tauntText.Draw(spriteBatch, font);
                 spriteBatch.End();
             }
 
