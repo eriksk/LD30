@@ -45,6 +45,9 @@
   <ItemGroup>
     <Compile Include="Bootstrap\DefaultScreenSelector.cs" />
     <Compile Include="Characters\Character.cs" />
+    <Compile Include="Collision\Grid.cs" />
+    <Compile Include="Collision\ICollidable.cs" />
+    <Compile Include="Collision\RectangleGridCollider.cs" />
     <Compile Include="Conversations\Conversation.cs" />
     <Compile Include="Gui\DialogueWindow.cs" />
     <Compile Include="Gui\DrawableRectangle.cs" />

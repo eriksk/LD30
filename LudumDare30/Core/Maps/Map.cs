@@ -1,4 +1,5 @@
-﻿using Core.TMX;
+﻿using Core.Collision;
+using Core.TMX;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +17,7 @@ namespace Core.Maps
         TmxMapData tmxMap;
         Texture2D tiles;
         Rectangle[] sources;
+        private CollisionGrid collisionGrid;
 
         public Map(TmxMapData tmxMap) 
         {
@@ -39,6 +41,32 @@ namespace Core.Maps
                     sources[col + row * (tiles.Width / 32)] = new Rectangle(col * 32, row * 32, 32, 32);   
                 }                
             }
+        }
+        public CollisionGrid CollisionGrid 
+        {
+            get
+            {
+                if (collisionGrid == null)
+                    collisionGrid = CreateCollisionGrid();
+                return collisionGrid;
+            }
+        }
+
+        private CollisionGrid CreateCollisionGrid()
+        {
+            foreach (var l in tmxMap.layers)
+            {
+                if (l.name == "collision") 
+                {
+                    bool[] data = new bool[l.data.Length];
+                    for (int i = 0; i < l.data.Length; i++)
+                    {
+                        data[i] = l.data[i] != 0;
+                    }
+                    return new CollisionGrid(data, l.width, l.height);
+                }
+            }
+            return null;
         }
 
         public Vector2 Center { get { return new Vector2((tmxMap.width * tmxMap.tilewidth) / 2, (tmxMap.height * tmxMap.tileheight) / 2); } }
@@ -72,5 +100,6 @@ namespace Core.Maps
                 }
             }
         }
+
     }
 }
