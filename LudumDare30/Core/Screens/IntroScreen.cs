@@ -33,7 +33,20 @@ namespace Core.Screens
             Texture2D pixel = new Texture2D(context.GraphicsDevice, 1, 1);
             pixel.SetData<Color>(new Color[]{ Color.White });
 
-            dialogueWindow = new DialogueWindow(pixel, new Conversation(new[] { "Hello", "Welcome", "this is glenn" }, 1000), 0, 0);
+            dialogueWindow = new DialogueWindow(pixel, new Conversation(new[]
+            { 
+                "Glenns universe is made up of\n two separate planes",
+                "The negative plane\nand the positive plane",
+                "Every action you perform\nin one plane has an \nequal but opposite reaction\nin the other plane",
+                "Some things are linked\n in both planes,",
+                "some things only exist\n in one plane",
+                "You are a traveler of\n planes. A manipulator of reality.",
+                "The authority does\n not allow this.",
+                "They are coming for you..."
+            }, 2000), 0, 0) 
+            {
+                DrawBubble = false
+            };
 
             base.Load();
         }

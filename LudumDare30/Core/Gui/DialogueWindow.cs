@@ -22,7 +22,10 @@ namespace Core.Gui
             this.conversation = conversation;
             drawableText = new DrawableText(conversation.Text, TextAlign.Center);
             drawableText.SetPosition(x, y);
+            DrawBubble = true;
         }
+
+        public bool DrawBubble { get; set; }
 
         public bool Done { get { return conversation.Done; } }
 
@@ -34,7 +37,10 @@ namespace Core.Gui
         
         public void Draw(SpriteBatch spriteBatch, SpriteFont font) 
         {
-            bubble.Draw(spriteBatch);
+            if (DrawBubble)
+            {
+                bubble.Draw(spriteBatch);
+            }
             drawableText.Draw(spriteBatch, font);
         }
     }
