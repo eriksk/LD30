@@ -6,7 +6,7 @@
          "name":"background",
          "opacity":0.540000021457672,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":32,
          "x":0,
          "y":0
