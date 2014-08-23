@@ -78,6 +78,14 @@
       <Name>level2</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="assets\maps\level4.json">
+      <Name>level4</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="assets\maps\level3.json">
+      <Name>level3</Name>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="assets\maps\testmap.json">
       <Name>testmap</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
