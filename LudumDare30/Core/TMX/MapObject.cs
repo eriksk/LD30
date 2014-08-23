@@ -7,8 +7,8 @@ namespace Core.TMX
 {
     public class MapObject
     {
-        public int width, height;
-        public int x, y;
+        public float width, height;
+        public float x, y;
         public string name;
         public float rotation;
         public bool visible;
