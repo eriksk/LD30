@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using se.skoggy.utils;
 using se.skoggy.utils.Cameras;
 using se.skoggy.utils.Interpolations;
 using se.skoggy.utils.Metrics;
@@ -43,7 +44,7 @@ namespace Core.Screens
         ContentManager content;
 
         TimerTrig reloadAfterDeathTrig = new TimerTrig(1000);
-        DrawableText deadText;
+        DrawableText deadText, tauntText;
         SpriteFont font;
 
         ParticleManager particleManager;
@@ -53,6 +54,8 @@ namespace Core.Screens
         Camera guiCam;
 
         int deathCount = 0;
+
+        string[] taunts;
 
         public Game() 
         {
@@ -69,6 +72,7 @@ namespace Core.Screens
 
             deadText = new DrawableText("DEAD", TextAlign.Center);
             font = content.Load<SpriteFont>(@"fonts/xirod_32");
+            tauntText = new DrawableText("", TextAlign.Center);
 
             pixel = new Texture2D(graphicsDevice, 1, 1);
             pixel.SetData<Color>(new Color[] { Color.White });
@@ -91,6 +95,8 @@ namespace Core.Screens
             deathCount = 0;
             map = new Map(mapLoader.Load(name));
             map.Load(content);
+
+            taunts = map.Taunts;
 
             character = new Character(bikeTexture, map);
             character.SetScale(1.4f);
@@ -116,6 +122,7 @@ namespace Core.Screens
             var startPosition = map.StartPosition;
             character.SetPosition(startPosition.X, startPosition.Y);
             character.rotation = 0f;
+            character.ClearSpeed();
             character.Alive = true;
             SetNegativity(PlaneState.Positive);
             state = GameState.WaitingToStart;
@@ -177,7 +184,15 @@ namespace Core.Screens
                     Audio.Audio.I.Stop("engine");
                     state = GameState.Died;
                     reloadAfterDeathTrig.Reset();
+
+                    if (taunts != null && taunts.Length > 0) 
+                    {
+                        tauntText.Content = taunts[Rand.Next(taunts.Length - 1)];
+                    }
+
                     tweenManager.Add(new ScaleXYTween(deadText, Interpolation.Elastic, 1000f, 0f, 3f));
+                    tweenManager.Add(new ScaleXYTween(tauntText, Interpolation.Elastic, 1000f, 0f, 2f));
+                    tweenManager.Add(new PositionTween(tauntText, Interpolation.Elastic, 1000f, Vector2.Zero, new Vector2(0, 64f)));
                     explosion.position.X = character.position.X;
                     explosion.position.Y = character.position.Y;
                     explosion.Reset();
@@ -222,6 +237,7 @@ namespace Core.Screens
             {
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, guiCam.Projection);
                 deadText.Draw(spriteBatch, font);
+                tauntText.Draw(spriteBatch, font);
                 spriteBatch.End();
             }
             else if (state == GameState.WaitingToStart)

@@ -37,6 +37,8 @@ namespace Core.Characters
         {
             speed = 0;
             rotationSpeed = 0;
+            velocity.X = 0f;
+            velocity.Y = 0f;
         }
 
         KeyboardState oldKeys, keys;
