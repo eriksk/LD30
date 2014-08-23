@@ -24,6 +24,7 @@ namespace LudumDare30
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.Window.Title = "GLENN";
         }
 
         #region IGameContext

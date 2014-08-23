@@ -89,7 +89,7 @@ namespace se.skoggy.utils.Cameras
 
         public virtual void Update(float dt)
         {
-            float speed = 0.5f;
+            float speed = 1f;
             
             position.X = movementInterpolation.Apply(position.X, target.X, speed);
             position.Y = movementInterpolation.Apply(position.Y, target.Y, speed);

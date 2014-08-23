@@ -156,7 +156,7 @@ namespace Core.Characters
 
         public Rectangle Bounds
         {
-            get { return new Rectangle((int)position.X - 16, (int)position.Y - 16, 32, 32); }
+            get { return new Rectangle((int)position.X - 8, (int)position.Y - 8, 16, 16); }
         }
 
         public int Size { get { return 32; } }
