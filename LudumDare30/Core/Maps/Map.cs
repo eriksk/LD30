@@ -45,26 +45,21 @@ namespace Core.Maps
                     sources[col + row * (tiles.Width / 32)] = new Rectangle(col * 32, row * 32, 32, 32);   
                 }                
             }
+        }
 
-            /*
-            Layer doorsLayer = GetDoorstLayer();
-            doors = new List<Door>();
-            foreach (var doorObject in doorsLayer.objects)
+        public string[] Taunts 
+        {
+            get
             {
-                var cell = new Cell(GetColumn(doorObject.x), GetRow(doorObject.y));
-                var door = new Door(doorObject.name, cell, GetDoorDirection(cell));
-                doors.Add(door);
-                if (doorObject.properties["flag"] == "true")
-                {
-                    door.Open(CollisionGrid);
-                }
-                else 
-                {
-                    door.Close(CollisionGrid);
-                }
-            }
-             */
+                if(!tmxMap.properties.ContainsKey("taunts"))
+                    return new string[0];
 
+                var taunts = tmxMap.properties["taunts"];
+                if (taunts == null)
+                    return new string[0];
+
+                return taunts.Split(';').ToArray();
+            }
         }
 
         public Rectangle Goal
@@ -202,6 +197,7 @@ namespace Core.Maps
                 }
             }
         }
+
 
     }
 }
