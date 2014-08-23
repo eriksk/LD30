@@ -95,8 +95,8 @@
  "orientation":"orthogonal",
  "properties":
     {
-     "description":"Your trial begins Glenn. Remember, press space to jump between planes",
-     "taunts":"This is only the first level Glenn, you shouldn't die here...;Come on Glenn, this is just painful to watch"
+     "description":"Your first trial begins Glenn. Remember, press space to jump between planes",
+     "taunts":"This is only the first level Glenn, you shouldn't die here...;Come on Glenn, this is just painful to watch;Ha ha ha"
     },
  "tileheight":32,
  "tilesets":[

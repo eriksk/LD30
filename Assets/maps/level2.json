@@ -95,8 +95,8 @@
  "orientation":"orthogonal",
  "properties":
     {
-     "description":"Remember to turn LEFT and RIGHT while remembering to use SPACE to jump",
-     "taunts":"Since you forgot. LEFT to turn left, RIGHT to turn right;Having trouble Glenn? Ha ha ha"
+     "description":"Remember: To turn LEFT and RIGHT while remembering to use SPACE to jump",
+     "taunts":"Since you forgot. LEFT to turn left, RIGHT to turn right;Having trouble Glenn? Ha ha ha;\"We are so sorry\";Pfft..."
     },
  "tileheight":32,
  "tilesets":[

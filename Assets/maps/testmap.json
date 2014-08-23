@@ -95,7 +95,7 @@
  "orientation":"orthogonal",
  "properties":
     {
-
+     "description":"Welcome! Press upp to start and space to jump between planes"
     },
  "tileheight":32,
  "tilesets":[
