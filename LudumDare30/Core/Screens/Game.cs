@@ -1,4 +1,5 @@
 ﻿using Core.Characters;
+using Core.Gui;
 using Core.Maps;
 using Core.TMX;
 using Microsoft.Xna.Framework;
@@ -48,6 +49,9 @@ namespace Core.Screens
         ParticleManager particleManager;
         ParticleSystem explosion;
 
+        PlayGuiBox playGuiBox;
+        Camera guiCam;
+
         public Game() 
         {
         }
@@ -55,6 +59,8 @@ namespace Core.Screens
         public void Load(ContentManager content, GraphicsDevice graphicsDevice)
         {
             this.content = content;
+            guiCam = new Camera(new Vector2(Resolution.Width / 2, Resolution.Height / 2));
+
             mainTarget = new RenderTarget2D(graphicsDevice, Resolution.Width, Resolution.Height);
             negate = content.Load<Effect>(@"shaders/negate");
             mapLoader = new TmxMapLoader(content, "maps");
@@ -66,6 +72,8 @@ namespace Core.Screens
             pixel.SetData<Color>(new Color[] { Color.White });
 
             bikeTexture = content.Load<Texture2D>(@"gfx/bike");
+
+            playGuiBox = new PlayGuiBox();
 
             particleManager = new ParticleManager();
             particleManager.Load(content);
@@ -83,8 +91,6 @@ namespace Core.Screens
 
             character = new Character(bikeTexture, map);
             character.SetScale(1.4f);
-            var startPosition = map.StartPosition;
-            character.SetPosition(startPosition.X, startPosition.Y);
 
             goal = map.Goal;
 
@@ -111,6 +117,7 @@ namespace Core.Screens
             state = GameState.WaitingToStart;
             negativityFlipWait.Reset();
             character.ClearSpeed();
+            explosion.Reset();
         }
 
         public void SetNegativity(PlaneState planeState)
@@ -186,6 +193,7 @@ namespace Core.Screens
                 if (reloadAfterDeathTrig.IsTrigged(dt) || (keys.IsKeyDown(Keys.Space) && oldKeys.IsKeyUp(Keys.Space))) 
                 {
                     Restart();
+                    playGuiBox.Show(tweenManager);
                 }
             }
 
@@ -208,9 +216,14 @@ namespace Core.Screens
 
             if (state == GameState.Died)
             {
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, cam.Projection);
-                deadText.SetPosition(character.position.X, character.position.Y);
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, guiCam.Projection);
                 deadText.Draw(spriteBatch, font);
+                spriteBatch.End();
+            }
+            else if (state == GameState.WaitingToStart)
+            {
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, guiCam.Projection);
+                playGuiBox.Draw(spriteBatch, font);
                 spriteBatch.End();
             }
 
