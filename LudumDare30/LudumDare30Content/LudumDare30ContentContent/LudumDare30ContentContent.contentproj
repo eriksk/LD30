@@ -49,7 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\audio\" />
-    <Folder Include="assets\shaders\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="assets\fonts\xirod_32.spritefont">
@@ -89,6 +88,20 @@
       <Name>tiles</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="assets\gfx\player.png">
+      <Name>player</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="assets\shaders\negate.fx">
+      <Name>negate</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>MGEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

@@ -2,6 +2,7 @@
 using Core.TMX;
 using Microsoft.Xna.Framework.Graphics;
 using se.skoggy.utils.Screens;
+using se.skoggy.utils.Tweening.Stock;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace Core.Screens
 
             base.Load();
         }
+        
 
         public override void Update(float dt)
         {
