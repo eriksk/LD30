@@ -18,6 +18,8 @@ namespace se.skoggy.utils.Metrics
 
         public float Interval { get { return interval; } }
 
+        public bool Done { get { return current >= interval; } }
+
         public void Reset()
         {
             current = 0f;
@@ -48,5 +50,6 @@ namespace se.skoggy.utils.Metrics
             current -= interval;
             return true;
         }
+
     }
 }

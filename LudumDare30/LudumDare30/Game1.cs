@@ -58,8 +58,8 @@ namespace LudumDare30
 
         protected override void Initialize()
         {
-            graphics.PreferredBackBufferWidth = 512;
-            graphics.PreferredBackBufferHeight = 512;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
             base.Initialize();
         }

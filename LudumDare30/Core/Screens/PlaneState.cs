@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.Screens
 {
-    class Resolution
+    public enum PlaneState
     {
-        public const int Width = 800;
-        public const int Height = 600;
+        Positive,
+        Negative
     }
 }

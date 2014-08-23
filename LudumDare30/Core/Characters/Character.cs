@@ -1,5 +1,6 @@
 ﻿using Core.Collision;
 using Core.Gui;
+using Core.Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,41 +16,61 @@ namespace Core.Characters
     public class Character : GameObject, ICollidable
     {
         public Vector2 velocity;
-        public CollisionGrid grid;
+        Map map;
+        bool alive;
 
-        public Character(Texture2D texture, CollisionGrid grid)
+        public Character(Texture2D texture, Map map)
             :base(texture)
         {
-            this.grid = grid;
+            this.map = map;
             velocity = Vector2.Zero;
+            alive = true;
         }
 
+        public bool Alive { get { return alive; } set { alive = value; } }
+
+        public void ClearSpeed()
+        {
+            speed = 0;
+            rotationSpeed = 0;
+        }
 
         KeyboardState oldKeys, keys;
+        float speed = 0f;
+        float rotationSpeed = 0;
+        float constantSpeed = 0.005f;
+        float constantRotationSpeed = 0.4f;
+        float maxSpeed = 0.005f;
+
+        public float Speed { get { return (constantSpeed + speed) / maxSpeed; } }
 
         public override void Update(float dt)
         {
             oldKeys = keys;
             keys = Keyboard.GetState();
 
-            float speed = 0.003f;
+
+            rotationSpeed = (constantSpeed + speed) * 1.1f;
 
             if (keys.IsKeyDown(Keys.Left))
             {
-                velocity.X -= speed * dt;
+                rotation -= (constantRotationSpeed * rotationSpeed) * dt;
             }
             if (keys.IsKeyDown(Keys.Right))
             {
-                velocity.X += speed * dt;
+                rotation += (constantRotationSpeed * rotationSpeed) * dt;
             }
-            if (keys.IsKeyDown(Keys.Up))
+            if (keys.IsKeyDown(Keys.Up)) 
             {
-                velocity.Y -= speed * dt;
+                speed += 0.00001f * dt;
+                if (speed > maxSpeed) 
+                {
+                    speed = maxSpeed;
+                }
             }
-            if (keys.IsKeyDown(Keys.Down))
-            {
-                velocity.Y += speed * dt;
-            }
+
+            velocity.X += (float)Math.Cos(rotation) * (constantSpeed + speed) * dt;
+            velocity.Y += (float)Math.Sin(rotation) * (constantSpeed + speed) * dt;
 
             velocity *= 0.8f;
 
@@ -57,11 +78,13 @@ namespace Core.Characters
             if (CorrectPositionX()) 
             {
                 velocity.X = 0f;
+                alive = false;
             }
             position.Y += velocity.Y * dt;
             if (CorrectPositionY()) 
             {
                 velocity.Y = 0f;
+                alive = false;
             }
 
             base.Update(dt);
@@ -69,6 +92,7 @@ namespace Core.Characters
 
         private bool CorrectPositionY()
         {
+            var grid = map.CollisionGrid;
             int col = (int)(Bounds.Center.X / Size);
             int row = (int)(Bounds.Center.Y / Size);
 
@@ -100,6 +124,7 @@ namespace Core.Characters
 
         private bool CorrectPositionX()
         {
+            var grid = map.CollisionGrid;
             int col = (int)(Bounds.Center.X / Size);
             int row = (int)(Bounds.Center.Y / Size);
 
@@ -136,8 +161,24 @@ namespace Core.Characters
 
         public int Size { get { return 32; } }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            float shadowOffset = 4f;
+            color = Color.Black;
+            color.A = 80;
+            position.X -= shadowOffset;
+            position.Y += shadowOffset;
+            base.Draw(spriteBatch);
+
+            color = Color.White;
+            position.X += shadowOffset;
+            position.Y -= shadowOffset;
+            base.Draw(spriteBatch);
+        }
+
         public void DrawDebug(SpriteBatch spriteBatch, Texture2D pixel)
         {
+            var grid = map.CollisionGrid;
             int col = (int)(Bounds.Center.X / Size);
             int row = (int)(Bounds.Center.Y / Size);
 
