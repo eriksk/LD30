@@ -2,12 +2,14 @@
 using Core.Gui;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 using se.skoggy.utils.GameObjects;
 using se.skoggy.utils.Metrics;
 using se.skoggy.utils.Screens;
 using se.skoggy.utils.UI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,18 +34,10 @@ namespace Core.Screens
 
             Texture2D pixel = new Texture2D(context.GraphicsDevice, 1, 1);
             pixel.SetData<Color>(new Color[]{ Color.White });
+            
+            string[] strings = JsonConvert.DeserializeObject<string[]>(File.ReadAllText(string.Concat(content.RootDirectory, "/dialogue/introScene.json")));
 
-            dialogueWindow = new DialogueWindow(pixel, new Conversation(new[]
-            { 
-                "Glenns universe is made up of\n two separate planes",
-                "The negative plane\nand the positive plane",
-                "Every action you perform\nin one plane has an \nequal but opposite reaction\nin the other plane",
-                "Some things are linked\n in both planes,",
-                "some things only exist\n in one plane",
-                "You are a traveler of\n planes. A manipulator of reality.",
-                "The authority does\n not allow this.",
-                "They are coming for you..."
-            }, 2000), 0, 0) 
+            dialogueWindow = new DialogueWindow(pixel, new Conversation(strings, 2000), 0, 0) 
             {
                 DrawBubble = false
             };
