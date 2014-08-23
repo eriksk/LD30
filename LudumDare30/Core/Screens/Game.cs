@@ -6,7 +6,12 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using se.skoggy.utils.Cameras;
+using se.skoggy.utils.Interpolations;
 using se.skoggy.utils.Metrics;
+using se.skoggy.utils.Particles;
+using se.skoggy.utils.Tweening;
+using se.skoggy.utils.Tweening.Stock;
+using se.skoggy.utils.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +41,13 @@ namespace Core.Screens
         TmxMapLoader mapLoader;
         ContentManager content;
 
+        TimerTrig reloadAfterDeathTrig = new TimerTrig(1000);
+        DrawableText deadText;
+        SpriteFont font;
+
+        ParticleManager particleManager;
+        ParticleSystem explosion;
+
         public Game() 
         {
         }
@@ -47,10 +59,21 @@ namespace Core.Screens
             negate = content.Load<Effect>(@"shaders/negate");
             mapLoader = new TmxMapLoader(content, "maps");
 
+            deadText = new DrawableText("DEAD", TextAlign.Center);
+            font = content.Load<SpriteFont>(@"fonts/xirod_32");
+
             pixel = new Texture2D(graphicsDevice, 1, 1);
             pixel.SetData<Color>(new Color[] { Color.White });
 
             bikeTexture = content.Load<Texture2D>(@"gfx/bike");
+
+            particleManager = new ParticleManager();
+            particleManager.Load(content);
+
+            ParticleSystemLoader particleLoader = new ParticleSystemLoader(content, "effects");
+
+            explosion = new ParticleSystem(particleLoader.Load("fire_blast"));
+            particleManager.AddSystem(explosion);
         }
 
         public void LoadMap(string name)
@@ -98,9 +121,8 @@ namespace Core.Screens
             negativityFlipWait.Reset();
         }
 
-        public void Update(float dt, Camera cam) 
+        public void Update(float dt, Camera cam, TweenManager tweenManager) 
         {
-
             oldKeys = keys;
             keys = Keyboard.GetState();
 
@@ -142,7 +164,13 @@ namespace Core.Screens
                 {
                     Audio.Audio.I.Play("explosion");
                     Audio.Audio.I.Stop("engine");
-                    Restart();
+                    state = GameState.Died;
+                    reloadAfterDeathTrig.Reset();
+                    tweenManager.Add(new ScaleXYTween(deadText, Interpolation.Elastic, 1000f, 0f, 3f));
+                    explosion.position.X = character.position.X;
+                    explosion.position.Y = character.position.Y;
+                    explosion.Reset();
+                    explosion.Play();
                 }
                 else
                 {
@@ -153,7 +181,15 @@ namespace Core.Screens
                     }
                 }
             }
+            else if (state == GameState.Died) 
+            {
+                if (reloadAfterDeathTrig.IsTrigged(dt) || (keys.IsKeyDown(Keys.Space) && oldKeys.IsKeyUp(Keys.Space))) 
+                {
+                    Restart();
+                }
+            }
 
+            particleManager.Update(dt);
             cam.Move(-character.position.X, -character.position.Y);
         }
 
@@ -167,6 +203,16 @@ namespace Core.Screens
             character.Draw(spriteBatch);
             character.DrawDebug(spriteBatch, pixel);
             spriteBatch.End();
+
+            particleManager.Draw(spriteBatch, cam);
+
+            if (state == GameState.Died)
+            {
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, cam.Projection);
+                deadText.SetPosition(character.position.X, character.position.Y);
+                deadText.Draw(spriteBatch, font);
+                spriteBatch.End();
+            }
 
             graphicsDevice.SetRenderTarget(null);
             graphicsDevice.Clear(Color.Transparent);

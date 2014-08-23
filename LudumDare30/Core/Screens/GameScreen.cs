@@ -60,7 +60,7 @@ namespace Core.Screens
             }
             else
             {
-                game.Update(dt, cam);
+                game.Update(dt, cam, tweenManager);
             }
             
             base.Update(dt);
