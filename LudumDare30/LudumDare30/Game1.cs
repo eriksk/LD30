@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using se.skoggy.utils.Screens;
 using Core.Bootstrap;
+using Core.Audio;
 #endregion
 
 namespace LudumDare30
@@ -67,6 +68,7 @@ namespace LudumDare30
 
         protected override void LoadContent()
         {
+            Audio.I.Load(new ContentManager(Services, ContentRoot));
             ChangeScreen(new DefaultScreenSelector(this).CreateDefaultScreen());
         }
 

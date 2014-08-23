@@ -113,6 +113,7 @@ namespace Core.Screens
             }
             else if (state == GameState.Playing)
             {
+                Audio.Audio.I.PlayLooped("engine");
                 if (negativityFlipWait.Done)
                 {
 
@@ -137,12 +138,15 @@ namespace Core.Screens
 
                 if (!character.Alive)
                 {
+                    Audio.Audio.I.Play("explosion");
+                    Audio.Audio.I.Stop("engine");
                     Restart();
                 }
                 else
                 {
                     if (goal.Intersects(character.Bounds))
                     {
+                        Audio.Audio.I.Stop("engine");
                         Finish();
                     }
                 }
