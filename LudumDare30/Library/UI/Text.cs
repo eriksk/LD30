@@ -8,20 +8,20 @@ using System.Text;
 
 namespace se.skoggy.utils.UI
 {
-    public class Text : ITweenable
+    public class DrawableText : ITweenable
     {
         public Vector2 position, origin, scale;
         public Color color;
         public float rotation;
 
         public SpriteEffects flip;
-        private readonly TextAlign align;
-        protected string text;
+        private TextAlign align;
+        protected string content;
         private bool dirty;
 
-        public Text(string text, TextAlign align = TextAlign.Left)
+        public DrawableText(string content, TextAlign align = TextAlign.Left)
         {
-            this.text = text;
+            this.content = content;
             this.align = align;
             color = Color.White;
             position = new Vector2();
@@ -32,9 +32,32 @@ namespace se.skoggy.utils.UI
             dirty = true;
         }
 
+        public string Content
+        {
+            get { return content; }
+            set 
+            {
+                if (content != value)
+                {
+                    content = value;
+                    dirty = true;
+                }
+            }
+        }
+
+        public TextAlign Align 
+        {
+            get { return align; }
+            set 
+            { 
+                align = value;
+                dirty = true;
+            }
+        }
+
         private void Clean(SpriteFont font)
         {
-            var size = font.MeasureString(text);
+            var size = font.MeasureString(content);
 
             switch (align)
             {
@@ -59,7 +82,7 @@ namespace se.skoggy.utils.UI
             if (dirty)
                 Clean(font);
 
-            spriteBatch.DrawString(font, text, position, color, rotation, origin, scale, flip, 0f);
+            spriteBatch.DrawString(font, content, position, color, rotation, origin, scale, flip, 0f);
         }
         
         #region ITweenable

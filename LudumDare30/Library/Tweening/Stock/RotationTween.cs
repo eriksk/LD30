@@ -11,7 +11,7 @@ namespace se.skoggy.utils.Tweening.Stock
     {
         float startRotation;
         float endRotation;
-        private UI.Text text;
+        private UI.DrawableText text;
         private float TransitionDuration;
         private Microsoft.Xna.Framework.Vector2 Left;
         private Microsoft.Xna.Framework.Vector2 Center;
