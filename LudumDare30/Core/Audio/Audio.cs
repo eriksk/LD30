@@ -35,6 +35,7 @@ namespace Core.Audio
             effects = new Dictionary<string, SoundEffectInstance>();
             effects.Add("engine", content.Load<SoundEffect>(@"audio/engine").CreateInstance());
             effects.Add("explosion", content.Load<SoundEffect>(@"audio/explosion").CreateInstance());
+            effects.Add("switch_positive", content.Load<SoundEffect>(@"audio/switch_positive").CreateInstance());
         }
 
         public void Play(string name)

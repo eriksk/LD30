@@ -129,6 +129,8 @@ namespace Core.Screens
                         {
                             SetNegativity(PlaneState.Positive);
                         }
+
+                        Audio.Audio.I.Play("switch_positive");
                     }
                 }
                 else
