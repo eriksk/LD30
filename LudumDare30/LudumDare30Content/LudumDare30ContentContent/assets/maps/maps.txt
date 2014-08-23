@@ -1,7 +1,5 @@
-testmap
-testmap
-testmap
-testmap
+level1
+level2
 testmap
 testmap
 testmap
