@@ -56,7 +56,7 @@ namespace Core.Screens
             base.StateChanged();
             if (Done) 
             {
-                context.ChangeScreen(new GameOverScreen(context));
+                context.ChangeScreen(new OutroScreen(context));
             }
         }
 

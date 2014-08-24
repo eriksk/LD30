@@ -67,6 +67,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Name>introScene</Name>
     </None>
+    <None Include="assets\dialogue\outroScene.json">
+      <Name>outroScene</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="assets\effects\fire_blast.json">
       <Name>fire_blast</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

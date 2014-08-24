@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
 using se.skoggy.utils.GameObjects;
-using se.skoggy.utils.Metrics;
 using se.skoggy.utils.Particles;
 using se.skoggy.utils.Screens;
 using se.skoggy.utils.UI;
@@ -19,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Core.Screens
 {
-    public class IntroScreen : BaseScreen
+    public class OutroScreen : BaseScreen
     {
         DrawableText text, spaceToSkipText;
         SpriteFont font;
@@ -30,15 +29,13 @@ namespace Core.Screens
 
         ParticleManager particleManager;
 
-        public IntroScreen(IGameContext context)
-            : base(context, "Intro", Resolution.Width, Resolution.Height)
+        public OutroScreen(IGameContext context)
+            : base(context, "Outro", Resolution.Width, Resolution.Height)
         {
         }
 
         public override void Load()
         {
-            Audio.Audio.I.PlayLooped("menu_song");
-
             font = content.Load<SpriteFont>(@"fonts/xirod_32");
 
             spaceToSkipText = new DrawableText("space: skip", TextAlign.Right);
@@ -47,8 +44,8 @@ namespace Core.Screens
 
             Texture2D pixel = new Texture2D(context.GraphicsDevice, 1, 1);
             pixel.SetData<Color>(new Color[]{ Color.White });
-            
-            string[] strings = JsonConvert.DeserializeObject<string[]>(File.ReadAllText(string.Concat(content.RootDirectory, "/dialogue/introScene.json")));
+
+            string[] strings = JsonConvert.DeserializeObject<string[]>(File.ReadAllText(string.Concat(content.RootDirectory, "/dialogue/outroScene.json")));
 
             dialogueWindow = new DialogueWindow(pixel, new Conversation(strings, 4000), 0, 0) 
             {
@@ -73,7 +70,7 @@ namespace Core.Screens
             base.StateChanged();
             if (Done) 
             {
-                context.ChangeScreen(new GameScreen(context));
+                context.Exit();
             }
         }
 
@@ -88,7 +85,10 @@ namespace Core.Screens
             {
                 if (dialogueWindow.Done)
                 {
-                    TransitionOut();
+                    if (keys.IsKeyDown(Keys.Space) && oldKeys.IsKeyUp(Keys.Space))
+                    {
+                        TransitionOut();
+                    }
                 }
                 else
                 {

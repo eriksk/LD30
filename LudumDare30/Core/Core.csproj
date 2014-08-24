@@ -66,6 +66,7 @@
     <Compile Include="Screens\GameState.cs" />
     <Compile Include="Screens\IntroScreen.cs" />
     <Compile Include="Screens\MapTestScreen.cs" />
+    <Compile Include="Screens\OutroScreen.cs" />
     <Compile Include="Screens\PlaneState.cs" />
     <Compile Include="Screens\Resolution.cs" />
     <Compile Include="Screens\SplashScreen.cs" />
