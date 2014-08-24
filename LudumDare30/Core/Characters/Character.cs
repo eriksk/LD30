@@ -60,7 +60,8 @@ namespace Core.Characters
 
             origin.X = 0.5f;
 
-            driftFactor = 0.006f;
+            constantRotationSpeed = 0.8f;
+            driftFactor = 0.003f;
 
             animation.Update(dt);
             SetSource(32 * animation.Frame, 0, 32, 32);
@@ -98,7 +99,7 @@ namespace Core.Characters
 
             if (keys.IsKeyDown(Keys.Up)) 
             {
-                speed += 0.00001f * dt;
+                speed += 0.000001f * dt;
                 if (speed > maxSpeed) 
                 {
                     speed = maxSpeed;
@@ -122,6 +123,8 @@ namespace Core.Characters
                 velocity.Y = 0f;
                 alive = false;
             }
+
+            Audio.Audio.I.SetPitch("engine", -1f + (speed / maxSpeed) * 2f);
 
             base.Update(dt);
         }

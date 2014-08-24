@@ -36,7 +36,7 @@ namespace Core.Audio
             effects.Add("engine", content.Load<SoundEffect>(@"audio/engine").CreateInstance());
             effects.Add("explosion", content.Load<SoundEffect>(@"audio/explosion").CreateInstance());
             effects.Add("skid", content.Load<SoundEffect>(@"audio/skid").CreateInstance());
-            effects["skid"].Volume = 0.7f;
+            effects["skid"].Volume = 0.5f;
             effects.Add("switch_positive", content.Load<SoundEffect>(@"audio/switch_positive").CreateInstance());
             effects.Add("menu_song", content.Load<SoundEffect>(@"audio/menu_song").CreateInstance());
             effects["menu_song"].Volume = 0.3f;
@@ -46,6 +46,11 @@ namespace Core.Audio
         {
             effects[name].Stop(true);
             effects[name].Play();
+        }
+
+        public void SetPitch(string name, float pitch)
+        {
+            effects[name].Pitch = pitch;
         }
 
         public void PlayLooped(string name)
