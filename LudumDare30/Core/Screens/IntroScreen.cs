@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
 using se.skoggy.utils.GameObjects;
 using se.skoggy.utils.Metrics;
+using se.skoggy.utils.Particles;
 using se.skoggy.utils.Screens;
 using se.skoggy.utils.UI;
 using System;
@@ -22,9 +23,11 @@ namespace Core.Screens
         DrawableText text, spaceToSkipText;
         SpriteFont font;
 
-        GameObject overlay;
+        GameObject overlay, background;
 
         DialogueWindow dialogueWindow;
+
+        ParticleManager particleManager;
 
         public IntroScreen(IGameContext context)
             : base(context, "Intro", Resolution.Width, Resolution.Height)
@@ -51,6 +54,15 @@ namespace Core.Screens
             Audio.Audio.I.PlayLooped("menu_song");
 
             overlay = new GameObject(content.Load<Texture2D>(@"gfx/overlay"));
+            background = new GameObject(content.Load<Texture2D>(@"gfx/background"));
+
+            particleManager = new ParticleManager();
+            particleManager.Load(content);
+
+            var speckle = new ParticleSystem(new ParticleSystemLoader(content, "effects").Load("retro_speckle"));
+            particleManager.AddSystem(speckle);
+            speckle.Play();
+            
 
             base.Load();
         }
@@ -86,6 +98,8 @@ namespace Core.Screens
                     }
                 }
             }
+
+            particleManager.Update(dt);
             base.Update(dt);
         }
 
@@ -96,9 +110,12 @@ namespace Core.Screens
             context.GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, cam.Projection);
+            background.Draw(spriteBatch);
             dialogueWindow.Draw(spriteBatch, font);
             spaceToSkipText.Draw(spriteBatch, font);
             spriteBatch.End();
+
+            particleManager.Draw(spriteBatch, cam);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp, null, null, null, cam.Projection);
             overlay.Draw(spriteBatch);

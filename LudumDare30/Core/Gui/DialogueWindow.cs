@@ -21,6 +21,7 @@ namespace Core.Gui
             bubble = new DrawableRectangle(pixel, x - width / 2, y - height / 2, width, height, new Color(100, 100, 100, 100), Color.DarkGray);
             this.conversation = conversation;
             drawableText = new DrawableText(conversation.Text, TextAlign.Center);
+            drawableText.color = new Color(141, 101, 65, 255);
             drawableText.SetPosition(x, y);
             DrawBubble = true;
         }

@@ -1,0 +1,108 @@
+{
+  "emitters": [
+    {
+      "blendState": "AlphaBlend",
+      "frequency": {
+        "min": 0.0,
+        "max": 10.0
+      },
+      "lifeTime": {
+        "min": 20.0,
+        "max": 100.0
+      },
+      "startColor": {
+        "min": {
+          "B": 192,
+          "G": 192,
+          "R": 192,
+          "A": 255
+        },
+        "max": {
+          "B": 183,
+          "G": 200,
+          "R": 236,
+          "A": 255
+        }
+      },
+      "endColor": {
+        "min": {
+          "B": 0,
+          "G": 0,
+          "R": 0,
+          "A": 0
+        },
+        "max": {
+          "B": 0,
+          "G": 0,
+          "R": 0,
+          "A": 0
+        }
+      },
+      "position": {
+        "min": {
+          "X": -400.0,
+          "Y": -300.0
+        },
+        "max": {
+          "X": 400.0,
+          "Y": 300.0
+        }
+      },
+      "velocity": {
+        "min": {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "max": {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      },
+      "startScale": {
+        "min": {
+          "X": 0.1,
+          "Y": 0.1
+        },
+        "max": {
+          "X": 0.1,
+          "Y": 0.1
+        }
+      },
+      "endScale": {
+        "min": {
+          "X": 0.1,
+          "Y": 0.1
+        },
+        "max": {
+          "X": 0.1,
+          "Y": 0.1
+        }
+      },
+      "gravity": {
+        "force": {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      },
+      "rotation": {
+        "min": 0.0,
+        "max": 10.0
+      },
+      "spawnCount": 1,
+      "sources": [
+        0,
+        5,
+        7,
+        11,
+        2,
+        3,
+        4,
+        6
+      ],
+      "loop": true,
+      "capacity": 256,
+      "Name": "Retro Speckle"
+    }
+  ],
+  "Name": "RetroSpeckle"
+}

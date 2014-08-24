@@ -28,7 +28,10 @@ namespace Core.Conversations
         public void Next()
         {
             if (!Done)
+            {
+                conversationTrig.Reset();
                 current++;
+            }
         }
 
         public void Update(float dt) 
