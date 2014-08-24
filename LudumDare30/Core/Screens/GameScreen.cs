@@ -25,7 +25,7 @@ namespace Core.Screens
         public GameScreen(IGameContext context)
             :base(context, "Ludum Dare 30", Resolution.Width, Resolution.Height)
         {
-            TransitionDuration = 2000f;
+            TransitionDuration = 0f;
         }
 
         public override void Load()
