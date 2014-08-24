@@ -29,6 +29,11 @@ namespace Core.Gui
 
         public bool Done { get { return conversation.Done; } }
 
+        public void Next()
+        {
+            conversation.Next();
+        }
+
         public void Update(float dt)
         {
             conversation.Update(dt);

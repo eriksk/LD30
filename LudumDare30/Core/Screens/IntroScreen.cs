@@ -2,6 +2,7 @@
 using Core.Gui;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
 using se.skoggy.utils.GameObjects;
 using se.skoggy.utils.Metrics;
@@ -18,8 +19,10 @@ namespace Core.Screens
 {
     public class IntroScreen : BaseScreen
     {
-        DrawableText text;
+        DrawableText text, spaceToSkipText;
         SpriteFont font;
+
+        GameObject overlay;
 
         DialogueWindow dialogueWindow;
 
@@ -32,6 +35,10 @@ namespace Core.Screens
         {
             font = content.Load<SpriteFont>(@"fonts/xirod_32");
 
+            spaceToSkipText = new DrawableText("space: skip", TextAlign.Right);
+            spaceToSkipText.SetPosition(Right.X - 16f, Bottom.Y - 16f);
+            spaceToSkipText.SetScale(0.6f);
+
             Texture2D pixel = new Texture2D(context.GraphicsDevice, 1, 1);
             pixel.SetData<Color>(new Color[]{ Color.White });
             
@@ -43,6 +50,7 @@ namespace Core.Screens
             };
             Audio.Audio.I.PlayLooped("menu_song");
 
+            overlay = new GameObject(content.Load<Texture2D>(@"gfx/overlay"));
 
             base.Load();
         }
@@ -56,9 +64,13 @@ namespace Core.Screens
             }
         }
 
+        KeyboardState keys, oldKeys;
 
         public override void Update(float dt)
         {
+            oldKeys = keys;
+            keys = Keyboard.GetState();
+
             if (Running)
             {
                 if (dialogueWindow.Done)
@@ -68,6 +80,10 @@ namespace Core.Screens
                 else
                 {
                     dialogueWindow.Update(dt);
+                    if (keys.IsKeyDown(Keys.Space) && oldKeys.IsKeyUp(Keys.Space)) 
+                    {
+                        dialogueWindow.Next();
+                    }
                 }
             }
             base.Update(dt);
@@ -81,6 +97,11 @@ namespace Core.Screens
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, cam.Projection);
             dialogueWindow.Draw(spriteBatch, font);
+            spaceToSkipText.Draw(spriteBatch, font);
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp, null, null, null, cam.Projection);
+            overlay.Draw(spriteBatch);
             spriteBatch.End();
         }
     }

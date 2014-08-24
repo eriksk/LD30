@@ -25,6 +25,12 @@ namespace Core.Conversations
 
         public bool Done { get { return current == sequence.Length - 1; } }
 
+        public void Next()
+        {
+            if (!Done)
+                current++;
+        }
+
         public void Update(float dt) 
         {
             if (conversationTrig.IsTrigged(dt) && !Done) 

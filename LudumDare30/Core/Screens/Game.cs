@@ -243,6 +243,13 @@ namespace Core.Screens
 
             particleManager.Draw(spriteBatch, cam);
 
+            graphicsDevice.SetRenderTarget(null);
+            graphicsDevice.Clear(Color.Transparent);
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, negate);
+            spriteBatch.Draw(mainTarget, new Rectangle(0, 0, Resolution.Width, Resolution.Height), Color.White);
+            spriteBatch.End();
+
             if (state == GameState.Died)
             {
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, guiCam.Projection);
@@ -258,13 +265,6 @@ namespace Core.Screens
                 mapDescription.Draw(spriteBatch, font);
                 spriteBatch.End();
             }
-
-            graphicsDevice.SetRenderTarget(null);
-            graphicsDevice.Clear(Color.Transparent);
-
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, negate);
-            spriteBatch.Draw(mainTarget, new Rectangle(0, 0, Resolution.Width, Resolution.Height), Color.White);
-            spriteBatch.End();
         }
     }
 }

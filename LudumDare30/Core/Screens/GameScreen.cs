@@ -2,6 +2,7 @@
 using Core.TMX;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using se.skoggy.utils.GameObjects;
 using se.skoggy.utils.Interpolations;
 using se.skoggy.utils.Particles;
 using se.skoggy.utils.Screens;
@@ -21,6 +22,7 @@ namespace Core.Screens
         Game game;
         string[] maps;
         int currentMap = 0;
+        GameObject overlay;
 
         public GameScreen(IGameContext context)
             :base(context, "Ludum Dare 30", Resolution.Width, Resolution.Height)
@@ -34,6 +36,8 @@ namespace Core.Screens
             game.Load(content, context.GraphicsDevice);
 
             maps = File.ReadAllLines(content.RootDirectory + "/" + "maps/maps.txt");
+
+            overlay = new GameObject(content.Load<Texture2D>(@"gfx/overlay"));
             
             currentMap = 0;
             LoadCurrentMap();
@@ -83,6 +87,12 @@ namespace Core.Screens
         {
             base.Draw();
             game.Draw(spriteBatch, context.GraphicsDevice, cam);
+
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp, null, null, null);
+            overlay.SetPosition(Resolution.Width / 2, Resolution.Height / 2);
+            overlay.Draw(spriteBatch);
+            spriteBatch.End();
         }
     }
 }

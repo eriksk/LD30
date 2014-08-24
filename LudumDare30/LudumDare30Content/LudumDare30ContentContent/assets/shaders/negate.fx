@@ -11,6 +11,8 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 		col = 1.0 - col;
 	}
 	
+	col.rgb = (col.r + col.g + col.b) / 3.0;
+	
 	col.a = 1.0;
 
 	return col;
