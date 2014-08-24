@@ -40,7 +40,7 @@ namespace Core.Screens
 
             overlay = new GameObject(content.Load<Texture2D>(@"gfx/overlay"));
             
-            currentMap = 7;
+            currentMap = 0;
             LoadCurrentMap();
 
             base.Load();
