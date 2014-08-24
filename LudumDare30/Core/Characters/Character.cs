@@ -39,6 +39,7 @@ namespace Core.Characters
             rotationSpeed = 0;
             velocity.X = 0f;
             velocity.Y = 0f;
+            currentDrift = 0f;
         }
 
         KeyboardState oldKeys, keys;
@@ -47,6 +48,8 @@ namespace Core.Characters
         float constantSpeed = 0.005f;
         float constantRotationSpeed = 0.7f;
         float maxSpeed = 0.005f;
+        float driftFactor = 0.001f;
+        float currentDrift = 0f;
 
         public float Speed { get { return (constantSpeed + speed) / maxSpeed; } }
 
@@ -55,19 +58,44 @@ namespace Core.Characters
             oldKeys = keys;
             keys = Keyboard.GetState();
 
+            origin.X = 0.5f;
+
+            driftFactor = 0.006f;
+
             animation.Update(dt);
             SetSource(32 * animation.Frame, 0, 32, 32);
 
             rotationSpeed = (constantSpeed + speed) * 1.1f;
 
+            bool drifting = false;
+
             if (keys.IsKeyDown(Keys.Left))
             {
                 rotation -= (constantRotationSpeed * rotationSpeed) * dt;
+                currentDrift -= driftFactor * dt;
+                drifting = true;
             }
-            if (keys.IsKeyDown(Keys.Right))
+            else if (keys.IsKeyDown(Keys.Right))
             {
                 rotation += (constantRotationSpeed * rotationSpeed) * dt;
+                currentDrift += driftFactor * dt;
+                drifting = true;
             }
+
+            if (drifting)
+            {
+                currentDrift *= 0.85f;
+                Audio.Audio.I.PlayLooped("skid");
+            }
+            else
+            {
+                Audio.Audio.I.Stop("skid");
+                rotation = rotation + currentDrift;
+                currentDrift = 0f;
+            }
+
+            //rotation += currentDrift * dt;
+
             if (keys.IsKeyDown(Keys.Up)) 
             {
                 speed += 0.00001f * dt;
@@ -176,12 +204,20 @@ namespace Core.Characters
             color.A = 80;
             position.X -= shadowOffset;
             position.Y += shadowOffset;
-            base.Draw(spriteBatch);
+            DrawDrifted(spriteBatch);
 
             color = Color.White;
             position.X += shadowOffset;
             position.Y -= shadowOffset;
-            base.Draw(spriteBatch);
+            DrawDrifted(spriteBatch);
+        }
+
+        private void DrawDrifted(SpriteBatch spriteBatch) 
+        {
+            originInPixels.X = source.Width * origin.X;
+            originInPixels.Y = source.Height * origin.Y;
+
+            spriteBatch.Draw(texture, position, source, color, rotation + currentDrift, originInPixels, scale, flip, 0f);
         }
 
         public void DrawDebug(SpriteBatch spriteBatch, Texture2D pixel)
@@ -206,5 +242,12 @@ namespace Core.Characters
                 }
             }
         }
+
+        public float GetDriftRotation()
+        {
+            return rotation + currentDrift;
+        }
+
+        public bool IsDrifting { get { return currentDrift != 0f; } }
     }
 }

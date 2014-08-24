@@ -60,6 +60,7 @@
     <Compile Include="Maps\MapItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\CharacterTestScreen.cs" />
+    <Compile Include="Screens\FlatLandTestDriveScreen.cs" />
     <Compile Include="Screens\Game.cs" />
     <Compile Include="Screens\GameOverScreen.cs" />
     <Compile Include="Screens\GameScreen.cs" />
@@ -76,6 +77,8 @@
     <Compile Include="TMX\TileSet.cs" />
     <Compile Include="TMX\TmxMapData.cs" />
     <Compile Include="TMX\TmxMapLoader.cs" />
+    <Compile Include="Trails\Trail.cs" />
+    <Compile Include="Trails\TrailManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Library.csproj">

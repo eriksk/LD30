@@ -173,10 +173,24 @@ namespace Core.Maps
         {
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 position)
+        public void DrawBackground(SpriteBatch spriteBatch, Vector2 position)
         {
             foreach (var layer in tmxMap.layers)
             {
+                if (layer.name == "background")
+                {
+                    DrawLayer(spriteBatch, layer, position);
+                }
+            }
+        }
+
+        public void DrawForeground(SpriteBatch spriteBatch, Vector2 position)
+        {
+            foreach (var layer in tmxMap.layers)
+            {
+                if (layer.name == "background")
+                    continue;
+
                 if (LayerTypes.Parse(layer.type) == LayerType.TileLayer)
                 {
                     if (layer.name == "positive" || layer.name == "negative")
@@ -201,7 +215,7 @@ namespace Core.Maps
             int positionRow = (int)(position.Y / tmxMap.tileheight);
             
             int camWidth = (Resolution.Width / tmxMap.tilewidth) + 2;
-            int camHeight = (Resolution.Height / tmxMap.tileheight) + 2;
+            int camHeight = (Resolution.Height / tmxMap.tileheight) + 3;
 
             int startCol = positionColumn - camWidth / 2;
             int startRow = positionRow - camHeight / 2;
@@ -221,6 +235,5 @@ namespace Core.Maps
                 }
             }
         }
-
     }
 }

@@ -2,6 +2,7 @@
 using Core.Gui;
 using Core.Maps;
 using Core.TMX;
+using Core.Trails;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -59,6 +60,8 @@ namespace Core.Screens
 
         DrawableText mapDescription;
 
+        TrailManager trails;
+
         public Game() 
         {
         }
@@ -78,6 +81,9 @@ namespace Core.Screens
             font = content.Load<SpriteFont>(@"fonts/xirod_32");
             tauntText = new DrawableText("", TextAlign.Center);
             tauntText.color = Color.Red;
+
+            trails = new TrailManager();
+            trails.Load(content);
 
             mapDescription.color = Color.Green;
 
@@ -119,6 +125,7 @@ namespace Core.Screens
         private void Finish()
         {
             state = GameState.Finished;
+            Audio.Audio.I.Stop("skid");
         }
 
         public GameState State { get { return state; } }
@@ -141,6 +148,8 @@ namespace Core.Screens
             negativityFlipWait.Reset();
             character.ClearSpeed();
             explosion.Reset();
+            trails.Clear();
+            Audio.Audio.I.Stop("skid");
         }
 
         public void SetNegativity(PlaneState planeState)
@@ -170,6 +179,7 @@ namespace Core.Screens
                 {
 
                     character.Update(dt);
+                    trails.Update(dt, character);
 
                     if (keys.IsKeyDown(Keys.Space) && oldKeys.IsKeyUp(Keys.Space))
                     {
@@ -194,6 +204,7 @@ namespace Core.Screens
                 {
                     Audio.Audio.I.Play("explosion");
                     Audio.Audio.I.Stop("engine");
+                    Audio.Audio.I.Stop("skid");
                     state = GameState.Died;
                     reloadAfterDeathTrig.Reset();
 
@@ -238,7 +249,9 @@ namespace Core.Screens
             graphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, cam.Projection);
-            map.Draw(spriteBatch, character.position);
+            map.DrawBackground(spriteBatch, character.position);
+            trails.Draw(spriteBatch);
+            map.DrawForeground(spriteBatch, character.position);
             character.Draw(spriteBatch);
             character.DrawDebug(spriteBatch, pixel);
             spriteBatch.End();

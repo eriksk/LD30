@@ -35,6 +35,8 @@ namespace Core.Audio
             effects = new Dictionary<string, SoundEffectInstance>();
             effects.Add("engine", content.Load<SoundEffect>(@"audio/engine").CreateInstance());
             effects.Add("explosion", content.Load<SoundEffect>(@"audio/explosion").CreateInstance());
+            effects.Add("skid", content.Load<SoundEffect>(@"audio/skid").CreateInstance());
+            effects["skid"].Volume = 0.7f;
             effects.Add("switch_positive", content.Load<SoundEffect>(@"audio/switch_positive").CreateInstance());
             effects.Add("menu_song", content.Load<SoundEffect>(@"audio/menu_song").CreateInstance());
             effects["menu_song"].Volume = 0.3f;
@@ -49,6 +51,9 @@ namespace Core.Audio
         public void PlayLooped(string name)
         {
             var i = effects[name];
+            if (i.State == SoundState.Playing)
+                return;
+
             i.IsLooped = true;
             i.Play();
         }

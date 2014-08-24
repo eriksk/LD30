@@ -25,7 +25,7 @@ namespace LudumDare30
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.Window.Title = "GLENN";
+            this.Window.Title = "Glenn - A Driving Saga";
         }
 
         #region IGameContext
