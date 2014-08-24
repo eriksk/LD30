@@ -19,7 +19,7 @@ namespace Core.Gui
 
         public PlayGuiBox()
         {
-            pressToPlay = new DrawableText("Press up arrow to start", TextAlign.Center);
+            pressToPlay = new DrawableText("up arrow: start", TextAlign.Center);
             deathCountText = new DrawableText("Death Count", TextAlign.Center);
             deathCountText.color = Color.Red;
         }
@@ -27,9 +27,9 @@ namespace Core.Gui
         public void Show(TweenManager tweenManager, int deathCount)
         {
             deathCountText.Content = "Death Count: " + deathCount;
-            tweenManager.Add(new PositionTween(pressToPlay, Interpolation.Elastic, 1000f, new Vector2(0, 0), new Vector2(0, -64f)));
+            tweenManager.Add(new PositionTween(pressToPlay, Interpolation.Elastic, 1000f, new Vector2(0, 0), new Vector2(0, -128f)));
             tweenManager.Add(new ScaleXYTween(pressToPlay, Interpolation.Elastic, 1000f, 0f, 2f));
-            tweenManager.Add(new PositionTween(deathCountText, Interpolation.Elastic, 500f, new Vector2(0, 0), new Vector2(0, 64f)));
+            tweenManager.Add(new PositionTween(deathCountText, Interpolation.Elastic, 500f, new Vector2(0, 0), new Vector2(0, 0f)));
             tweenManager.Add(new ScaleXYTween(deathCountText, Interpolation.Elastic, 500f, 0f, 2f));
         }
 

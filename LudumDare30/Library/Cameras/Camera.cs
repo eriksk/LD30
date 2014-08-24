@@ -31,6 +31,8 @@ namespace se.skoggy.utils.Cameras
             center.Y = Height / 2;
         }
 
+        public Vector2 Position { get { return position - center; } }
+
         public virtual Matrix Projection 
         {
             get 
@@ -97,5 +99,6 @@ namespace se.skoggy.utils.Cameras
             rotation = movementInterpolation.Apply(rotation, targetRotation, speed);
             scale = movementInterpolation.Apply(scale, targetScale, speed);
         }
+
     }
 }

@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Core.Globals;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using se.skoggy.utils.GameObjects;
 using se.skoggy.utils.Interpolations;
 using se.skoggy.utils.Metrics;
 using se.skoggy.utils.Screens;
@@ -19,6 +21,7 @@ namespace Core.Screens
         SpriteFont font;
 
         TimerTrig quitTimer;
+        GameObject overlay;
 
         public GameOverScreen(IGameContext context)
             :base(context, "Game Over", Resolution.Width, Resolution.Height)
@@ -29,6 +32,8 @@ namespace Core.Screens
         {
             gameOverText = new DrawableText("Game Over", TextAlign.Center);
             thanksForPlaying = new DrawableText("Thanks for playing", TextAlign.Center);
+            gameOverText.color = Colors.Primary;
+            thanksForPlaying.color = Colors.Primary;
 
             Tween(new ScaleXYTween(gameOverText, Interpolation.Elastic, TransitionDuration, 0f, 3f));
             Tween(new PositionTween(gameOverText, Interpolation.Elastic, TransitionDuration, Vector2.Zero, new Vector2(0, -128)));
@@ -37,8 +42,9 @@ namespace Core.Screens
             
             font = content.Load<SpriteFont>(@"fonts/xirod_32");
 
-            quitTimer = new TimerTrig(3000);
+            overlay = new GameObject(content.Load<Texture2D>(@"gfx/overlay"));
 
+            quitTimer = new TimerTrig(3000);
 
             base.Load();
         }
@@ -73,12 +79,14 @@ namespace Core.Screens
         public override void Draw()
         {
             base.Draw();
-            context.GraphicsDevice.Clear(Color.Black);
+            context.GraphicsDevice.Clear(Colors.Background);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, cam.Projection);
             gameOverText.Draw(spriteBatch, font);
             thanksForPlaying.Draw(spriteBatch, font);
+            overlay.Draw(spriteBatch);
             spriteBatch.End();
+
         }
     }
 }

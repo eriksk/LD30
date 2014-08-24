@@ -173,7 +173,7 @@ namespace Core.Maps
         {
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
             foreach (var layer in tmxMap.layers)
             {
@@ -182,25 +182,37 @@ namespace Core.Maps
                     if (layer.name == "positive" || layer.name == "negative")
                     {
                         if ((layer.name == "positive" && planeState == PlaneState.Positive) || (layer.name == "negative" && planeState == PlaneState.Negative))
-                            DrawLayer(spriteBatch, layer);
+                            DrawLayer(spriteBatch, layer, position);
                     }
                     else 
                     {
-                        DrawLayer(spriteBatch, layer);
+                        DrawLayer(spriteBatch, layer, position);
                     }
                 }
             }
         }
 
-        private void DrawLayer(SpriteBatch spriteBatch, Layer layer)
+        private void DrawLayer(SpriteBatch spriteBatch, Layer layer, Vector2 position)
         {
             Color color = Color.White * layer.opacity;
             color.A = 255;
 
-            for (int col = 0; col < layer.width; col++)
+            int positionColumn = (int)(position.X / tmxMap.tilewidth);
+            int positionRow = (int)(position.Y / tmxMap.tileheight);
+            
+            int camWidth = (Resolution.Width / tmxMap.tilewidth) + 2;
+            int camHeight = (Resolution.Height / tmxMap.tileheight) + 2;
+
+            int startCol = positionColumn - camWidth / 2;
+            int startRow = positionRow - camHeight / 2;
+
+            for (int col = startCol; col < startCol + camWidth; col++)
             {
-                for (int row = 0; row < layer.height; row++)
+                for (int row = startRow; row < startRow + camHeight; row++)
                 {
+                    if (col < 0 || col > tmxMap.width - 1 || row < 0 || row > tmxMap.height - 1)
+                        continue;
+
                     int cell = layer.data[col + row * layer.width];
                     if (cell > 0) 
                     {
@@ -209,5 +221,6 @@ namespace Core.Maps
                 }
             }
         }
+
     }
 }

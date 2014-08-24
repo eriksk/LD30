@@ -1,4 +1,5 @@
 ﻿using Core.Conversations;
+using Core.Globals;
 using Core.Gui;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,7 +24,7 @@ namespace Core.Screens
         DrawableText text, spaceToSkipText;
         SpriteFont font;
 
-        GameObject overlay, background;
+        GameObject overlay;
 
         DialogueWindow dialogueWindow;
 
@@ -51,10 +52,8 @@ namespace Core.Screens
             {
                 DrawBubble = false
             };
-            Audio.Audio.I.PlayLooped("menu_song");
 
             overlay = new GameObject(content.Load<Texture2D>(@"gfx/overlay"));
-            background = new GameObject(content.Load<Texture2D>(@"gfx/background"));
 
             particleManager = new ParticleManager();
             particleManager.Load(content);
@@ -107,17 +106,16 @@ namespace Core.Screens
         {
             base.Draw();
 
-            context.GraphicsDevice.Clear(Color.Black);
+            context.GraphicsDevice.Clear(Colors.Background);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, cam.Projection);
-            background.Draw(spriteBatch);
             dialogueWindow.Draw(spriteBatch, font);
             spaceToSkipText.Draw(spriteBatch, font);
             spriteBatch.End();
 
             particleManager.Draw(spriteBatch, cam);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp, null, null, null, cam.Projection);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, cam.Projection);
             overlay.Draw(spriteBatch);
             spriteBatch.End();
         }

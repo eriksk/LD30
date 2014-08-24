@@ -49,6 +49,7 @@
     <Compile Include="Collision\CollisionGrid.cs" />
     <Compile Include="Collision\ICollidable.cs" />
     <Compile Include="Conversations\Conversation.cs" />
+    <Compile Include="Globals\Colors.cs" />
     <Compile Include="Gui\DialogueWindow.cs" />
     <Compile Include="Gui\DrawableRectangle.cs" />
     <Compile Include="Gui\PlayGuiBox.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Screens\MapTestScreen.cs" />
     <Compile Include="Screens\PlaneState.cs" />
     <Compile Include="Screens\Resolution.cs" />
+    <Compile Include="Screens\SplashScreen.cs" />
     <Compile Include="TMX\Layer.cs" />
     <Compile Include="TMX\LayerTypes.cs" />
     <Compile Include="TMX\MapObject.cs" />

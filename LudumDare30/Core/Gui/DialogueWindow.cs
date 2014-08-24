@@ -1,4 +1,5 @@
 ﻿using Core.Conversations;
+using Core.Globals;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using se.skoggy.utils.UI;
@@ -21,7 +22,7 @@ namespace Core.Gui
             bubble = new DrawableRectangle(pixel, x - width / 2, y - height / 2, width, height, new Color(100, 100, 100, 100), Color.DarkGray);
             this.conversation = conversation;
             drawableText = new DrawableText(conversation.Text, TextAlign.Center);
-            drawableText.color = new Color(141, 101, 65, 255);
+            drawableText.color = Colors.Primary;
             drawableText.SetPosition(x, y);
             DrawBubble = true;
         }

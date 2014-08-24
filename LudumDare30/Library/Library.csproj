@@ -87,6 +87,7 @@
     <Compile Include="Sprites\SpriteSheet.cs" />
     <Compile Include="Tweening\ITween.cs" />
     <Compile Include="Tweening\ITweenable.cs" />
+    <Compile Include="Tweening\Stock\AlphaFadeTween.cs" />
     <Compile Include="Tweening\Stock\PositionTween.cs" />
     <Compile Include="Tweening\Stock\RotationTween.cs" />
     <Compile Include="Tweening\Stock\ScaleXYTween.cs" />

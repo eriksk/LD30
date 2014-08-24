@@ -126,8 +126,10 @@ namespace Core.Screens
         private void Restart(TweenManager tweenManager)
         {
             mapDescription.Content = map.Description;
-            tweenManager.Add(new ScaleXYTween(mapDescription, Interpolation.Elastic, 500f, 0f, 0.6f));
-            tweenManager.Add(new PositionTween(mapDescription, Interpolation.Elastic, 500f, Vector2.Zero, new Vector2(0, - 128)));
+
+            mapDescription.color = Color.Orange;
+            tweenManager.Add(new ScaleXYTween(mapDescription, Interpolation.Elastic, 800f, 0f, 0.6f));
+            tweenManager.Add(new PositionTween(mapDescription, Interpolation.Elastic, 800f, Vector2.Zero, new Vector2(0, -(Resolution.Height / 2) + 32f)));
             playGuiBox.Show(tweenManager, deathCount);
             var startPosition = map.StartPosition;
             character.SetPosition(startPosition.X, startPosition.Y);
@@ -236,19 +238,12 @@ namespace Core.Screens
             graphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, cam.Projection);
-            map.Draw(spriteBatch);
+            map.Draw(spriteBatch, character.position);
             character.Draw(spriteBatch);
             character.DrawDebug(spriteBatch, pixel);
             spriteBatch.End();
 
             particleManager.Draw(spriteBatch, cam);
-
-            graphicsDevice.SetRenderTarget(null);
-            graphicsDevice.Clear(Color.Transparent);
-
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, negate);
-            spriteBatch.Draw(mainTarget, new Rectangle(0, 0, Resolution.Width, Resolution.Height), Color.White);
-            spriteBatch.End();
 
             if (state == GameState.Died)
             {
@@ -265,6 +260,14 @@ namespace Core.Screens
                 mapDescription.Draw(spriteBatch, font);
                 spriteBatch.End();
             }
+
+            graphicsDevice.SetRenderTarget(null);
+            graphicsDevice.Clear(Color.Transparent);
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, negate);
+            spriteBatch.Draw(mainTarget, new Rectangle(0, 0, Resolution.Width, Resolution.Height), Color.White);
+            spriteBatch.End();
+
         }
     }
 }

@@ -11,7 +11,22 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 		col = 1.0 - col;
 	}
 	
-	col.rgb = (col.r + col.g + col.b) / 3.0;
+	// black and white
+	//col.rgb = (col.r + col.g + col.b) / 4.0;
+
+	// vignette
+	float burn = 0.3;
+	float d = sqrt(pow(uv.x - 0.5, 2) + pow(uv.y - 0.5, 2));
+	col.rgb -= d * burn;
+
+	// sat
+	float saturation = 0.3;
+	float a = col.r + col.g + col.b;
+	a /= 3.0;
+	a *= 1.0 - saturation;
+	col.r = (col.r * saturation + a);
+	col.g = (col.g * saturation + a);
+	col.b = (col.b * saturation + a);
 	
 	col.a = 1.0;
 

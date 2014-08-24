@@ -2,6 +2,7 @@
 using Core.TMX;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using se.skoggy.utils;
 using se.skoggy.utils.GameObjects;
 using se.skoggy.utils.Interpolations;
 using se.skoggy.utils.Particles;
@@ -39,7 +40,7 @@ namespace Core.Screens
 
             overlay = new GameObject(content.Load<Texture2D>(@"gfx/overlay"));
             
-            currentMap = 0;
+            currentMap = 7;
             LoadCurrentMap();
 
             base.Load();
@@ -89,8 +90,10 @@ namespace Core.Screens
             game.Draw(spriteBatch, context.GraphicsDevice, cam);
 
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp, null, null, null);
-            overlay.SetPosition(Resolution.Width / 2, Resolution.Height / 2);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null);
+            overlay.color = Color.White;
+            overlay.color.A = 200;
+            overlay.SetPosition((Resolution.Width / 2), (Resolution.Height / 2));
             overlay.Draw(spriteBatch);
             spriteBatch.End();
         }

@@ -44,9 +44,6 @@ namespace Core.Screens
         {
             base.Draw();
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, cam.Projection);
-            map.Draw(spriteBatch);
-            spriteBatch.End();
         }
     }
 }
